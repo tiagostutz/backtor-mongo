@@ -46,7 +46,7 @@ const worker = new ConductorWorker({
 const taskType = "backup";
 
 const fn = (input) => {
-  logger.debug("INPUT:", input);
+  logger.info("Starting backup task. INPUT:", input);
   return new Promise((resolve, reject) => {
     const handler = setTimeout(() => {
       clearTimeout(handler);
