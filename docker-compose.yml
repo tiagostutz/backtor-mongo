@@ -1,0 +1,72 @@
+version: "3.7"
+
+services:
+  backtor:
+    image: flaviostutz/backtor
+    restart: always
+    ports:
+      - 6000:6000
+    environment:
+      - LOG_LEVEL=debug
+      - CONDUCTOR_API_URL=http://backtor-conductor:8080/api
+
+  backtor-conductor:
+    image: flaviostutz/backtor-conductor
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - DYNOMITE_HOSTS=dynomite:8102:us-east-1c
+      - ELASTICSEARCH_URL=elasticsearch:9300
+      - LOADSAMPLE=false
+      - PROVISIONING_UPDATE_EXISTING_TASKS=false
+
+  dynomite:
+    image: flaviostutz/dynomite:0.7.5
+    restart: always
+    ports:
+      - 8102:8102
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.6.8
+    restart: always
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1000m"
+      - transport.host=0.0.0.0
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20MB"
+        max-file: "5"
+
+  conductor-ui:
+    image: flaviostutz/conductor-ui
+    restart: always
+    environment:
+      - WF_SERVER=http://backtor-conductor:8080/api/
+    ports:
+      - 5000:5000
+
+  mongo-db:
+    image: mongo:4
+    ports:
+      - 27077:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+
+  backtor-mongo:
+    image: local/backtor-mongo
+    build: .
+    environment:
+      - MONGO_HOST=mongo-db
+      - MONGO_PORT=27017
+      - MONGO_USER=root
+      - MONGO_PASSWORD=root
+      - MONGO_DATABASE=admin
+      - CONDUCTOR_API_URL=http://backtor-conductor:8080

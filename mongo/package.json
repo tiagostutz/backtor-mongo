@@ -1,0 +1,36 @@
+{
+  "name": "backtor-mongo",
+  "version": "0.0.1",
+  "description": "a mongo backup runtime using backtor, a netflix conductor backup",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js | ./node_modules/.bin/pino-colada",
+    "dev": "LOG_LEVEL=debug CONDUCTOR_URL=http://localhost:8080 MONGO_USER=root MONGO_PASSWORD=root MONGO_HOST=localhost MONGO_PORT=27077 MONGO_DATABASE=admin node app.js | ./node_modules/.bin/pino-colada"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tiagostutz/backtor-mongo.git"
+  },
+  "keywords": [
+    "mongo",
+    "backup",
+    "backtor",
+    "conductor"
+  ],
+  "author": "Tiago Stutz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tiagostutz/backtor-mongo/issues"
+  },
+  "homepage": "https://github.com/tiagostutz/backtor-mongo#readme",
+  "dependencies": {
+    "conductor-nodejs-worker": "^0.1.0",
+    "mongodb-backup": "^1.6.9",
+    "pino": "^6.7.0"
+  },
+  "devDependencies": {
+    "pino-colada": "^2.1.0",
+    "pino-pretty": "^4.3.0"
+  }
+}
