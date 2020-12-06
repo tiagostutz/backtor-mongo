@@ -1,5 +1,7 @@
 # Backtor Mongo
 
+## Sample usage
+
 Sample `docker-compose.yml` file on how to use backtor-mongo:
 
 ```
@@ -115,3 +117,19 @@ The response will be:
     }
 ]
 ```
+
+## Configurations
+
+### MongoDB Connection parameters
+
+Basically you will have to define and pass those environment variables to the backtor-mongo service:
+
+- MONGO_HOST
+- MONGO_PORT
+- MONGO_USER
+- MONGO_PASSWORD
+- MONGO_DATABASE
+
+### Volumes
+
+The dumps are stored at the `/dumps` folder, so you can map a volume to this folder.
