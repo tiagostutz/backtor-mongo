@@ -10,8 +10,7 @@ version: "3.7"
 services:
 
   backtor-mongo-worker:
-    image: local/backtor-mongo
-    build: .
+    image: tiagostutz/backtor-mongo:0.0.1
     environment:
       - MONGO_HOST=<YOUR_MONGO_HOST>
       - MONGO_PORT=<YOUR_MONGO_PORT>
@@ -127,6 +126,7 @@ Basically you will have to define and pass those environment variables to the ba
 - MONGO_HOST
 - MONGO_PORT
 - MONGO_USER
+- MONGO_AUTH_DATABASE
 - MONGO_PASSWORD
 - MONGO_DATABASE
 

@@ -32,6 +32,7 @@ const conductorURL = process.env.CONDUCTOR_API_URL || "http://localhost:8080";
 const host = process.env.MONGO_HOST;
 const port = process.env.MONGO_PORT;
 const user = process.env.MONGO_USER;
+const authDatabase = process.env.MONGO_AUTH_DATABASE || "admin";
 const password = process.env.MONGO_PASSWORD;
 const database = process.env.MONGO_DATABASE;
 const dumpsDir = process.env.BACKUP_FILES_DIR || "/dumps";
@@ -58,6 +59,8 @@ const fn = (input) => {
         port +
         " --db " +
         database +
+        " --authenticationDatabase=" +
+        authDatabase +
         " --username " +
         user +
         " --password " +
@@ -71,6 +74,8 @@ const fn = (input) => {
           logger.info("Successfully executed `mongodump` command. ");
           resolve({
             result: false,
+            dataId: newBackupPath,
+            dataSizeMB: 1,
           });
         } else {
           reject("Error executing `mongodump` command. Details: " + error);
